@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Discord Clone</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+display:flex;
+height:100vh;
+background:#1e1e1e;
+color:white;
+}
+
+#rooms{
+width:200px;
+background:#111;
+padding:10px;
+}
+
+#chat{
+flex:1;
+display:flex;
+flex-direction:column;
+}
+
+#messages{
+flex:1;
+padding:10px;
+overflow-y:auto;
+}
+
+input,button{
+padding:10px;
+margin:5px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="rooms">
+<h3>Rooms</h3>
+<button onclick="join('general')">#general</button>
+<button onclick="join('gaming')">#gaming</button>
+</div>
+
+<div id="chat">
+<h2>TOP G DISCORD</h2>
+
+<div id="messages"></div>
+
+<div>
+<input id="msg">
+<button onclick="send()">Send</button>
+</div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+const socket = io();
+
+let room = "general";
+let user = prompt("Username:");
+
+socket.emit("joinRoom",room);
+
+function join(r){
+room = r;
+socket.emit("joinRoom",room);
+}
+
+socket.on("message",(data)=>{
+const div = document.createElement("div");
+div.innerHTML = `<b>${data.user}</b>: ${data.text}`;
+messages.appendChild(div);
+});
+
+function send(){
+socket.emit("message",{
+user:user,
+room:room,
+text:msg.value
+});
+msg.value="";
+}
+</script>
+
+</body>
+</html>
