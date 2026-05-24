@@ -1,10 +1,10 @@
 const mysql = require("mysql2");
 
 const db = mysql.createConnection({
-    host: "HOSTUL_TAU",
-    user: "USERUL_TAU",
-    password: "PAROLA_TA",
-    database: "DATABASE_TA",
+    host: "mysql-joi.railway.internal",
+    user: "root",
+    password: "EBXBxycekhqfMZjwMOWpVslWKZcwHWyR",
+    database: "railway",
     port: 3306
 });
 
